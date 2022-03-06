@@ -1,0 +1,38 @@
+<div class="content-wrapper">
+  <form [formGroup]="form">
+    <ng-container formArrayName="tasks">
+      <div *ngFor="let task of tasksFormArray?.controls; let i = index" class="task-card-wrapper" [formGroupName]="i">
+        <mat-card class="task-card" [class.archived]="tasksFormArray.at(i).get('archived')?.value">
+          <mat-card-title *ngIf="!(edit.index === i && edit.fieldName === 'title')" (click)="editField('title', i)">{{ tasksFormArray.at(i).get('title')?.value || 'Add Title' }}</mat-card-title>
+          <mat-card-title *ngIf="edit.index === i && edit.fieldName === 'title'">
+            <input type="text" appAutofocus formControlName="title" placeholder="Add Title" (keydown.enter)="stopEdit()">
+          </mat-card-title>
+
+          <mat-card-subtitle *ngIf="!(edit.index === i && edit.fieldName === 'description')" (click)="editField('description', i)">{{ tasksFormArray.at(i).get('description')?.value || 'Add Description' }}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="edit.index === i && edit.fieldName === 'description'">
+            <input type="text" appAutofocus formControlName="description" placeholder="Add Description" (keydown.enter)="stopEdit()">
+          </mat-card-subtitle>
+
+          <!-- <mat-card-content></mat-card-content> -->
+
+          <mat-card-actions>
+            <ng-container *ngIf="!tasksFormArray.at(i).get('saved')?.value || edit.index === i">
+              <button mat-button class="save" [disabled]="!tasksFormArray.at(i).valid" (click)="saveTask()">Save</button>
+              <button mat-button class="cancel" [disabled]="edit.index !== i" (click)="resetFormGroup()">Cancel</button>
+            </ng-container>
+            <ng-container *ngIf="tasksFormArray.at(i).get('saved')?.value && !tasksFormArray.at(i).get('archived')?.value && edit.index !== i">
+              <button mat-button (click)="archiveTask(i)">Archive</button>
+            </ng-container>
+            <ng-container *ngIf="tasksFormArray.at(i).get('archived')?.value">
+              <button mat-button (click)="unArchiveTask(i)">Unarchive</button>
+            </ng-container>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-container>
+  </form>
+
+  <div class="page-footer-action-butttons">
+    <button mat-button (click)="addTaskFormControl()">Add Task</button>
+  </div>
+</div>
