@@ -2,7 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.3.
 ## Get started
-
+Create a folder for the project, navigate to it and run the following commands:
+Run `git init` to initialize git.
+Run `git clone https://github.com/Leonardum/echometer.git` to clone the project locally.
+Run `cd echometer` to navigate into the project folder.
 Run `npm install` to install all dependencies.
 
 ## Development server
